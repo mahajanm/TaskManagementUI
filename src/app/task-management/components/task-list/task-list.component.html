@@ -1,0 +1,55 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <h5>Task Details</h5>
+        </li>
+    </ol>
+</nav>
+
+<div class="actionbutton">
+    <a routerLink="/app/create" class="btn btn-primary">Create New Task</a>
+</div>
+
+<div class="container mt-3" *ngIf="tasks.length > 0; else noTasksTemplate">
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of tasks | paginate: { itemsPerPage: 5, currentPage: p }">
+                <td style="display: none;">{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ displayStatus(task.status) }}</td>
+                <td>{{ task.dueDate | date }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1" (click)="editTask(task.id)"
+                        *ngIf="checkCurrentStatus(task.status)">
+                        <i class="fas fa-edit"></i> <!-- Font Awesome Edit Icon -->
+                    </button>
+                    <button class="btn btn-danger btn-sm me-1" (click)="deleteTask(task.id)">
+                        <i class="fas fa-trash-alt"></i> <!-- Font Awesome Delete Icon -->
+                    </button>
+                    <button class="btn btn-success btn-sm" *ngIf="checkCurrentStatus(task.status)"
+                        (click)="markAsDone(task)">
+                        <i class="fas fa-check"></i> <!-- Font Awesome Check/Done Icon -->
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+<ng-template #noTasksTemplate>
+    <div class="text-center mt-5">
+        <p>Task details are not available.</p>
+    </div>
+</ng-template>

@@ -1,0 +1,49 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <h5>{{currentAction}}</h5>
+        </li>
+    </ol>
+</nav>
+<form #taskForm="ngForm" (ngSubmit)="onAddOrUpdateTask(taskForm)" class="container mt-4" novalidate>
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <!-- <input type="text" ngModel name="title" id="title" class="form-control" placeholder="Title" required #title="ngModel"> -->
+        <input type="text" [(ngModel)]="task.title" name="title" id="title" class="form-control" #title="ngModel"
+            placeholder="Title" required>
+        <div *ngIf="title.invalid && title.touched" class="text-danger">
+            Title is required.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" [(ngModel)]="task.description" name="description" id="description" #description="ngModel"
+            class="form-control" placeholder="Description" required>
+        <div *ngIf="description.invalid && description.touched" class="text-danger">
+            Description is required.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select [(ngModel)]="task.status" name="status" id="status" class="form-select" #status="ngModel" required>
+            <option value="" disabled selected>Select status</option>
+            <option value="0">To Do</option>
+            <option value="1">In Progress</option>
+            <option value="2">Done</option>
+        </select>
+        <div *ngIf="status.invalid && status.touched" class="text-danger">
+            Status is required.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="dueDate" class="form-label">Due Date</label>
+        <input type="date" [(ngModel)]="task.dueDate" name="dueDate" id="dueDate" class="form-control"
+            #dueDate="ngModel" required [disabled]="isEditMode">
+        <div *ngIf="dueDate.invalid && dueDate.touched" class="text-danger">
+            Due date is required.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary me-1" [disabled]="taskForm.invalid">{{ id ? 'Update Task' : 'Add Task'
+        }}</button>
+    <a routerLink="/app/taskDetail" class="btn btn-primary me1">Cancel</a>
+</form>
