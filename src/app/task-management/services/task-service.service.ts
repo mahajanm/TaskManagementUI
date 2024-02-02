@@ -4,13 +4,14 @@ import { TaskDetail } from '../models/taskdetail.model';
 import { Observable } from 'rxjs';
 import { AddTaskDetailRequestDto } from '../models/addTaskDetailRequestDto.model';
 import { UpdateTaskDetailRequestDto } from '../models/updateTaskDetailRequestDto.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  private apiUrl = 'https://localhost:7209/api/TaskDetails';
+  private apiUrl = environment.taskApiUrl;
 
   constructor(private http: HttpClient) { }
 

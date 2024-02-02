@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7209/api';
+  private apiUrl = environment.apiUrl;
 
   private tokenKey = 'authToken';
 
